@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "express-reload": "^1.2.0"
   }
 }
