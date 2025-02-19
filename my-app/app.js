@@ -1,11 +1,15 @@
 var express = require("express");
-var reload = require("express-reload");
 var app = express();
+const path = require("path");
+app.use(express.static(path.join(__dirname)));
+
+
 app.get("/", (req, res) => {
     res.sendFile(`${__dirname}/index.html`);
 })
-var path = __dirname + '/app.js'
-app.use(reload(path))
-app.listen(3000, () => {
-    console.log("Server started on port 3000");
+app.use((req, res)=> {
+    res.status(404).sendFile(`${__dirname}/404.html`);
+})
+app.listen(8000, () => {
+    console.log("Server started on port 8000");
 })
