@@ -2,7 +2,7 @@
 
 1. Скачать python 3.12 с официального сайта
 2. Склонировать репозиторий (git clone git@github.com:Danchicic/backend-lessons-mirea.git)
-3. Перейти в ветку practice5-6(git checkout practice5-6)
+3. Перейти в нужную ветку (git checkout)
 4. скачать зависимости (pip install -r requirements.txt)
 5. Открыть два терминала
 
@@ -24,4 +24,6 @@ uvicorn main:app --port 8000
 ## Теперь маршруты доступны по адресам
     localhost:8000/
     localhost:8080/
+    Страница с песочницей graphql, доступна по адресу localhost:8000/graphql
+    Документация по rest api(swagger), находится /docs
 
