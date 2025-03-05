@@ -4,6 +4,8 @@ from core.config import BASE_DIR
 from core import schemas
 import json
 
+from starlette.websockets import WebSocket
+
 router = APIRouter()
 
 
@@ -13,8 +15,11 @@ async def get_user_view():
     pass
 
 
-@router.get("/items")
-async def get_items() -> list[schemas.Item]:
-    with open(f'{BASE_DIR}/db.json') as file:
-        data = json.load(file)
-    return [schemas.Item(**el) for el in data['products']]
+@router.websocket("/ws")
+async def chat(
+        websocket: WebSocket,
+):
+    await websocket.accept()
+    while True:
+        user_text = await websocket.receive_text()
+        print("user send", user_text)

@@ -4,6 +4,8 @@ from fastapi.responses import RedirectResponse
 from api.routes import router
 from fastapi.middleware.cors import CORSMiddleware
 
+from user_server.graphql.queries import graphql_app
+
 app = FastAPI(
     swagger_ui_parameters={
         "displayRequestDuration": True,  # Показать длительность запросов
@@ -17,6 +19,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.include_router(router)
+app.include_router(graphql_app, prefix='/graphql')
 
 
 @app.get('/')

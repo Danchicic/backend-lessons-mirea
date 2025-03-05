@@ -11,8 +11,35 @@
 
 </head>
 <body>
+<script>
+    const chatSocket = new WebSocket('ws://localhost:8000/ws');
+
+    chatSocket.onmessage = function (event) {
+        const data = JSON.parse(event.data);
+        const userChat = document.getElementById('user-chat');
+        userChat.innerHTML += `
+        <div class="container" id="user-chat-messages">
+        ${data}
+        </div>
+        `
+    }
+
+    function sendMessage() {
+        console.log("send message", document.getElementById('user-chat-input').value)
+        chatSocket.send(JSON.stringify({
+            type: 'message',
+            message: document.getElementById('user-chat-input').value,
+        }))
+    }
+</script>
 <h1>User view</h1>
+<div class="container" id="user-chat">
+    <input type="text" id="user-chat-input" placeholder="Enter your message here...">
+    <button onClick="sendMessage()">Send message</button>
+
+</div>
 <div id="root" class="container"></div>
+
 <script>
     const root = document.getElementById('root');
 
@@ -35,11 +62,18 @@
         root.appendChild(newCard);
     }
 
-    fetch('http://localhost:8000/items').then(
+    fetch('http://127.0.0.1:8000/graphql',
+        {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({"query": "{\n  cards {\n    id\n    name\n    description\n    price\n  }\n}"})
+        }).then(
         res => res.json()
     ).then(data => {
         console.log(data);
-        data.forEach(item => {
+        data['data']['cards'].forEach(item => {
             createCardByJson(item);
         })
     })
