@@ -1,25 +1,33 @@
 import React from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {removeFromCart, clearCart} from '../features/cartSlice';
-import {Card, CardContent, Typography, Button, List, ListItem, ListItemText} from
+import { useSelector, useDispatch } from 'react-redux';
+import { removeFromCart, clearCart } from '../features/cartSlice';
+import { Card, CardContent, Typography, Button, List, ListItem, ListItemText } from
         '@mui/material';
-
+import { motion } from 'framer-motion';
 const Cart = () => {
     const dispatch = useDispatch();
-    const {items, total} = useSelector((state) => state.cart);
+    const { items, total } = useSelector((state) => state.cart);
     return (
-        <Card sx={{maxWidth: 345, margin: 2}}>
+        <Card sx={{ maxWidth: 345, margin: 2 }}>
             <CardContent>
                 <Typography variant="h6">Корзина</Typography>
                 <List>
                     {items.map((item) => (
-                        <ListItem key={item.id}>
-                            <ListItemText
-                                primary={item.title}
-                                secondary={`${item.quantity} x ${item.price}$`}
-                            />
-                            <Button onClick={() => dispatch(removeFromCart(item))}>Удалить</Button>
-                        </ListItem>
+                        <motion.div
+                            key={item.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5 }}
+                        >
+                            <ListItem>
+                                <ListItemText
+                                    primary={item.title}
+                                    secondary={`${item.quantity} x ${item.price}$`}
+                                />
+                                <Button onClick={() =>
+                                    dispatch(removeFromCart(item))}>Удалить</Button>
+                            </ListItem>
+                        </motion.div>
                     ))}
                 </List>
                 <Typography variant="h6">Общая стоимость: {total}$</Typography>
