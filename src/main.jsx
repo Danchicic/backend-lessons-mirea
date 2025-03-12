@@ -1,14 +1,19 @@
-import {StrictMode} from 'react'
-import {createRoot} from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-import {Provider} from "react-redux";
-import {store} from './store/store.js';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
+import {store, persistor} from './store/store';
+import {ThemeContextProvider} from './context/ThemeContext';
+import {CssBaseline} from '@mui/material';
+import App from './App';
 
-createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById('root')).render(
     <Provider store={store}>
-        <StrictMode>
-            <App/>
-        </StrictMode>
-    </Provider>,
-)
+        <PersistGate loading={null} persistor={persistor}>
+            <ThemeContextProvider>
+                <CssBaseline/>
+                <App/>
+            </ThemeContextProvider>
+        </PersistGate>
+    </Provider>
+);

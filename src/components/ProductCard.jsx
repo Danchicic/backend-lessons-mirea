@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
         >
-            <Card sx={{ maxWidth: 345, margin: 2 }}>
+            <Card sx={{ maxWidth: 345, margin: 2, boxShadow: 3 }}>
                 <CardMedia
                     component="img"
                     height="140"
@@ -25,6 +25,7 @@ const ProductCard = ({ product }) => {
                     <Button
                         variant="contained"
                         onClick={() => dispatch(addToCart(product))}
+                        sx={{ mt: 2 }}
                     >
                         Добавить в корзину
                     </Button>
